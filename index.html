@@ -557,6 +557,22 @@ box-shadow:0 8px 25px rgba(0,0,0,.25);text-decoration:none;border:3px solid #fff
 @media(max-width:600px){.floating-wa{right:14px;bottom:14px;width:58px;height:58px}}
 </style>
 
+
+<style id="blue-white-theme">
+:root{--blue:#0b4775;--blue2:#1268a3;--white:#fff;--light:#f4f9fc}
+body{background:#fff!important;color:#123047!important}
+.topbar{background:#fff!important;border-bottom-color:#dbeaf3!important}
+.hero{background:linear-gradient(135deg,#f7fcff,#eaf5fb)!important}
+.hero h1,.section h2,.brand,.footer-brand span{color:var(--blue)!important}
+.badge,.eyebrow,.price{color:var(--blue2)!important}
+.btn.primary,.contact-box{background:var(--blue)!important}
+.btn.outline{border-color:var(--blue)!important;color:var(--blue)!important}
+.light{background:#f4f9fc!important}
+.test,.info-card,.search,.hero-card{background:#fff!important;border-color:#d9e8f0!important}
+.price{background:#edf6fb!important}
+.floating-wa{background:#25D366!important}
+</style>
+
 </head>
 <body>
 
@@ -761,7 +777,20 @@ box-shadow:0 8px 25px rgba(0,0,0,.25);text-decoration:none;border:3px solid #fff
           <li><b>3</b><span>هيوصلك تأكيد فوري برقم الحجز.</span></li>
           <li><b>4</b><span>تيجي المعمل في معادك وتاخد أولوية.</span></li>
         </ul>
-      </div>
+      
+<div class="prescription-upload" style="margin-top:14px;">
+  <label for="prescriptionImage" style="display:block;margin-bottom:8px;font-weight:700;">
+    📷 صورة الروشتة (اختياري)
+  </label>
+  <input id="prescriptionImage" name="prescriptionImage" type="file"
+         accept="image/*" capture="environment"
+         style="width:100%;padding:12px;border:1px dashed currentColor;border-radius:12px;background:transparent;">
+  <small style="display:block;margin-top:6px;opacity:.75;">
+    لو مش عارف اسم التحليل، صوّر الروشتة وارفع صورتها.
+  </small>
+  <div id="prescriptionPreview" style="margin-top:10px;"></div>
+</div>
+</div>
 
       <form class="booking-form" id="bookingForm">
         <div class="form-row">
@@ -950,6 +979,30 @@ box-shadow:0 8px 25px rgba(0,0,0,.25);text-decoration:none;border:3px solid #fff
 <a class="floating-wa" href="https://wa.me/201116144031" target="_blank" rel="noopener" aria-label="تواصل معنا عبر واتساب">
 <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.1 17.1c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-1.5-.8-2.5-1.4-3.5-3.1-.3-.5.3-.5.8-1.5.1-.2.1-.4 0-.6-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.8 5.1.8.3 1.5.5 2 .7.8.2 1.6.2 2.2.1.7-.1 2.1-.9 2.4-1.8.3-.9.3-1.7.2-1.8-.1-.2-.3-.2-.6-.4zM16 3.2A12.8 12.8 0 0 0 5 22.6L3.3 28.8l6.4-1.7A12.8 12.8 0 1 0 16 3.2zm0 23.2c-2 0-3.9-.5-5.6-1.6l-.4-.2-3.8 1 1-3.7-.2-.4A10.4 10.4 0 1 1 16 26.4z"/></svg>
 </a>
+
+
+<script>
+(function(){
+  const input = document.getElementById('prescriptionImage');
+  const preview = document.getElementById('prescriptionPreview');
+  if(!input || !preview) return;
+  input.addEventListener('change', function(){
+    preview.innerHTML = '';
+    const file = this.files && this.files[0];
+    if(!file) return;
+    if(!file.type.startsWith('image/')){
+      preview.textContent = 'من فضلك اختر صورة فقط.';
+      this.value = '';
+      return;
+    }
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    img.alt = 'معاينة صورة الروشتة';
+    img.style.cssText = 'max-width:180px;max-height:180px;border-radius:12px;display:block;object-fit:cover;';
+    preview.appendChild(img);
+  });
+})();
+</script>
 
 </body>
 </html>
